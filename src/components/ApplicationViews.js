@@ -4,7 +4,12 @@ import { Home } from "./Home"
 import { AnimalCard } from "./animal/AnimalCard"
 import { EmployeeCard } from "./employee/EmployeesCard"
 import { LocationCard } from "./location/LocationsCard"
-import { CustomersCard } from "./customer/CustomersCard"
+import { CustomerCard } from "./customer/CustomersCard"
+import { AnimalProvider } from "./animal/AnimalProvider"
+import { AnimalList } from "./animal/AnimalList"
+import { CustomerProvider } from "./customer/CustomerProvider"
+import { CustomerList } from "./customer/CustomerList"
+
 
 
 export const ApplicationViews = () => {
@@ -16,18 +21,24 @@ export const ApplicationViews = () => {
             </Route>
 
             {/* Render the animal list when http://localhost:3000/animals */}
-            <Route path="/animals">
-                <AnimalCard />
-            </Route>
+            <AnimalProvider>
+                <Route exact path="/animals">
+                    <AnimalList />
+                </Route>
+            </AnimalProvider>
+
             <Route path="/employees">
                 <EmployeeCard />
             </Route>
             <Route path="/locations">
                 <LocationCard />
             </Route>
-            <Route path="/customers">
-                <CustomersCard />
-            </Route>
+
+            <CustomerProvider>
+                <Route exact path="/customers">
+                    <CustomerList />
+                </Route>
+            </CustomerProvider>
         </>
     )
 }
