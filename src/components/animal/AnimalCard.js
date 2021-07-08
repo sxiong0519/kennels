@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react" //importing from react
 import "./Animal.css"
 
 export const AnimalCard = () => (
