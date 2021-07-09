@@ -3,24 +3,24 @@ import { EmployeeContext } from "./EmployeeProvider"
 import { EmployeeCard } from "./EmployeesCard"
 import "./Employees.css"
 
-export const CustomerList = () => {
+export const EmployeeList = () => {
   // This state changes when `getAnimals()` is invoked below
-  const { customers, getCustomers } = useContext(CustomerContext)
+  const { employees, getEmployees } = useContext(EmployeeContext)
 
   //useEffect - reach out to the world for something
   useEffect(() => {
-    console.log("CustomerList: useEffect - getCustomers")
-    getCustomers()
+    console.log("EmployeeList: useEffect - getEmployees")
+    getEmployees()
 
   }, [])
 
 
   return (
-    <div className="customers">
-      {console.log("CustomerList: Render", customers)}
+    <div className="employees">
+      {console.log("EmployeeList: Render", employees)}
       {
-        customers.map(customer => {
-          return <CustomerCard key={customer.id} customer={customer} />
+        employees.map(employee => {
+          return <EmployeeCard key={employee.id} employee={employee} />
         })
       }
     </div>
