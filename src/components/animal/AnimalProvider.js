@@ -8,7 +8,7 @@ export const AnimalProvider = (props) => {
     const [animals, setAnimals] = useState([])
 
     const getAnimals = () => {
-        return fetch("http://localhost:8088/animals?_expand=location")
+        return fetch("http://localhost:8088/animals?_expand=location&_expand=customer")
         .then(res => res.json())
         .then(setAnimals)
     }
@@ -32,7 +32,7 @@ export const AnimalProvider = (props) => {
     */
     return (
         <AnimalContext.Provider value={{
-            animals, getAnimals, addAnimal
+            animals, getAnimals, addAnimal //this is how you are letting other components know what they can access
         }}>
             {props.children}
         </AnimalContext.Provider>

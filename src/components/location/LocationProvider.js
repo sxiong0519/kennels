@@ -1,27 +1,27 @@
 import React, { useState, createContext } from "react"
 
 // The context is imported and used by individual components that need data
-export const EmployeeContext = createContext()
+export const LocationContext = createContext()
 
 // This component establishes what data can be used.
-export const EmployeeProvider = (props) => {
-    const [employees, setEmployees] = useState([])
+export const LocationProvider = (props) => {
+    const [locations, setLocations] = useState([])
 
-    const getEmployees = () => {
-        return fetch("http://localhost:8088/employees?_expand=location")
+    const getLocations = () => {
+        return fetch("http://localhost:8088/locations")
         .then(res => res.json())
-        .then(setEmployees)
+        .then(setLocations)
     }
 
-    const addEmployee = employeeObj => {
-        return fetch("http://localhost:8088/employees", {
+    const addLocation = locationObj => {
+        return fetch("http://localhost:8088/locations", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(employeeObj)
+            body: JSON.stringify(locationObj)
         })
-        .then(getEmployees)
+        .then(getLocations)
     }
 
     /*
@@ -31,10 +31,10 @@ export const EmployeeProvider = (props) => {
         allows any child elements to access them.
     */
     return (
-        <EmployeeContext.Provider value={{
-            employees, getEmployees, addEmployee
+        <LocationContext.Provider value={{
+            locations, getLocations, addLocation
         }}>
             {props.children}
-        </EmployeeContext.Provider>
+        </LocationContext.Provider>
     )
 }
