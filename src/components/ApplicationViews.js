@@ -12,8 +12,6 @@ import { LocationList } from "./location/LocationList"
 import { AnimalForm } from "./animal/AnimalForm"
 import { EmployeeForm } from "./employee/EmployeeForm"
 
-// ....hello
-
 
 export const ApplicationViews = () => {
     return (

@@ -60,7 +60,7 @@ export const EmployeeForm = () => {
         locationId: locationId,
       }
       addEmployee(newEmployee)
-        .then(() => history.push("/locations"))
+        .then(() => history.push("/employees"))
     }
   }
 
@@ -70,7 +70,7 @@ export const EmployeeForm = () => {
       <fieldset>
         <div className="form-group">
           <label htmlFor="name">Employee name:</label>
-          <input type="text" id="name" required autoFocus className="form-control" placeholder="Animal name" value={animal.name} onChange={handleControlledInputChange} />
+          <input type="text" id="name" required autoFocus className="form-control" placeholder="Employee name" value={employee.name} onChange={handleControlledInputChange} />
         </div>
       </fieldset>
       <fieldset>
