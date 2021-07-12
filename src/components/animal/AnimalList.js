@@ -1,28 +1,38 @@
 import React, { useContext, useEffect } from "react"
 import { AnimalContext } from "./AnimalProvider"
+import { LocationContext } from "../location/LocationProvider"
+import { CustomerContext } from "../customer/CustomerProvider"
 import { AnimalCard } from "./AnimalCard"
 import "./Animal.css"
+import { useHistory } from "react-router"
 
 export const AnimalList = () => {
-  // This state changes when `getAnimals()` is invoked below
-  const { animals, getAnimals } = useContext(AnimalContext) //using animalcontext from animalprovider module/component as an argument to usecontext
+    
+    const { animals, getAnimals } = useContext(AnimalContext)
 
   //useEffect - reach out to the world for something
-  useEffect(() => {//useEffect = listen for customevents 
-    console.log("AnimalList: useEffect - getAnimals") //first argument contains a logic that should run
-    getAnimals() //gets invoked and will change the value in line 8 "animals"
+  useEffect(() => {
+    console.log("AnimalList: useEffect - getAnimals")
+    getAnimals()
 
-  }, []) //second argument -array that is being observed that if a value changes then the function will run
+  }, [])
 
+    const history = useHistory()
 
-  return (
-    <div className="animals">
-      {console.log("AnimalList: Render", animals)}
-      {
-        animals.map(animal => {
-          return <AnimalCard key={animal.id} animal={animal} />
-        })
-      }
-    </div>
-  )
+return (
+    <>
+        <h2>Animals</h2>
+		<button onClick={() => {history.push("/animals/create")}}>
+            Add Animal
+        </button>
+        <div className="animals">
+        {
+			animals.map(animal => {
+				return <AnimalCard key={animal.id} animal={animal} />
+			})
+        }
+        </div>
+    </>
+)
+
 }
