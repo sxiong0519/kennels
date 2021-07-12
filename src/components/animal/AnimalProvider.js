@@ -13,16 +13,28 @@ export const AnimalProvider = (props) => {
         .then(setAnimals)
     }
 
-    const addAnimal = animalObj => {
+    // const addAnimal = animalObj => {
+    //     return fetch("http://localhost:8088/animals", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(animalObj)
+    //     })
+    //     .then(getAnimals)
+    // }
+
+    const addAnimal = animal => {
         return fetch("http://localhost:8088/animals", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(animalObj)
+            body: JSON.stringify(animal)
         })
-        .then(getAnimals)
+        .then(response => response.json())
     }
+    
 
     /*
         You return a context provider which has the
