@@ -9,6 +9,5 @@ export const AnimalCard = ({ animal }) => (
             { animal.name }
           </Link>
         </h3>
-        <div className="animal__breed">{ animal.breed }</div>
     </section>
 )
