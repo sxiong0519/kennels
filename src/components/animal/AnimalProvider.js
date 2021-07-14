@@ -41,6 +41,13 @@ export const AnimalProvider = (props) => {
         .then(res => res.json()) // note we don't set anything on state here. Why?
     }
     
+    const releaseAnimal = animalId => {
+        return fetch(`http://localhost:8088/animals/${animalId}`, {
+          method: "DELETE"
+        })
+          .then(getAnimals)
+    }
+    
     
 
     /*
@@ -51,7 +58,7 @@ export const AnimalProvider = (props) => {
     */
     return (
         <AnimalContext.Provider value={{
-            animals, getAnimals, addAnimal, getAnimalById //this is how you are letting other components know what they can access
+            animals, getAnimals, addAnimal, getAnimalById, releaseAnimal //this is how you are letting other components know what they can access
         }}>
             {props.children}
         </AnimalContext.Provider>
