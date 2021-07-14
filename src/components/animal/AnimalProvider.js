@@ -7,12 +7,13 @@ export const AnimalContext = createContext()
 export const AnimalProvider = (props) => {
     const [animals, setAnimals] = useState([])
 
-    const getAnimals = () => {
-        return fetch("http://localhost:8088/animals?_expand=location&_expand=customer")
-        .then(res => res.json())
-        .then(setAnimals)
-    }
-
+        // adding an _expand for each animal's customer, like we just did for getting a single animal
+        const getAnimals = () => {
+            return fetch("http://localhost:8088/animals?_expand=location&_expand=customer")
+            .then(res => res.json())
+            .then(setAnimals)
+        }    
+        
     // const addAnimal = animalObj => {
     //     return fetch("http://localhost:8088/animals", {
     //         method: "POST",
@@ -34,6 +35,12 @@ export const AnimalProvider = (props) => {
         })
         .then(response => response.json())
     }
+
+    const getAnimalById = (id) => {
+        return fetch(`http://localhost:8088/animals/${id}?_expand=location&_expand=customer`)
+        .then(res => res.json()) // note we don't set anything on state here. Why?
+    }
+    
     
 
     /*
@@ -44,7 +51,7 @@ export const AnimalProvider = (props) => {
     */
     return (
         <AnimalContext.Provider value={{
-            animals, getAnimals, addAnimal //this is how you are letting other components know what they can access
+            animals, getAnimals, addAnimal, getAnimalById //this is how you are letting other components know what they can access
         }}>
             {props.children}
         </AnimalContext.Provider>

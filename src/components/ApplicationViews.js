@@ -12,6 +12,10 @@ import { LocationList } from "./location/LocationList"
 import { AnimalForm } from "./animal/AnimalForm"
 import { EmployeeForm } from "./employee/EmployeeForm"
 import { LocationForm } from "./location/LocationForm"
+import { AnimalDetail } from "./animal/AnimalDetail"
+import { EmployeeDetail } from "./employee/EmployeeDetail"
+import { LocationDetail } from "./location/LocationDetail"
+
 
 
 export const ApplicationViews = () => {
@@ -20,7 +24,10 @@ export const ApplicationViews = () => {
             <AnimalProvider>
             <Route exact path="/animals">
                     <AnimalList />
-                </Route>
+            </Route>
+            <Route exact path="/animals/detail/:animalId(\d+)">
+                    <AnimalDetail />
+            </Route>
                 <LocationProvider>
                     <CustomerProvider>
                         <Route exact path="/animals/create">
@@ -29,6 +36,7 @@ export const ApplicationViews = () => {
                     </CustomerProvider>
                 </LocationProvider>
             </AnimalProvider>
+            
 
             {/* Render the location list when http://localhost:3000/ */}
             <Route exact path="/">
@@ -46,6 +54,9 @@ export const ApplicationViews = () => {
                     <Route exact path="/employees/create">
                         <EmployeeForm />
                     </Route>
+                    <Route exact path="/employees/detail/:employeeId(\d+)">
+                        <EmployeeDetail />
+                    </Route>
                 </LocationProvider>
             </EmployeeProvider>
 
@@ -56,6 +67,13 @@ export const ApplicationViews = () => {
                 <Route path = "/locations/create">
                     <LocationForm />
                 </Route>
+                <AnimalProvider>
+                    <EmployeeProvider>
+                        <Route exact path="/locations/detail/:locationId(\d+)">
+                            <LocationDetail />
+                        </Route>
+                    </EmployeeProvider>
+                </AnimalProvider>
             </LocationProvider>
 
             <CustomerProvider>
