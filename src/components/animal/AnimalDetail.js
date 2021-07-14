@@ -15,12 +15,12 @@ export const AnimalDetail = () => {
 
   const history = useHistory()
 
-const handleRelease = () => {
-    releaseAnimal(animal.id)
-      .then(() => {
-        history.push("/animals")
-      })
-  }
+  const handleRelease = () => {
+      releaseAnimal(animal.id)
+        .then(() => {
+          history.push("/animals")
+        })
+    }
 
   useEffect(() => {
     console.log("useEffect", animalId)
@@ -38,6 +38,10 @@ const handleRelease = () => {
       <div className="animal__location">Location: {animal.location?.name}</div>
       <div className="animal__owner">Customer: {animal.customer?.name}</div>
       <button onClick={handleRelease}>Release Animal</button>
+      <button onClick={() => {
+          history.push(`/animals/edit/${animal.id}`)
+      }}>Edit</button>
+
 
     </section>
   )
