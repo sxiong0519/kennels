@@ -1,25 +1,18 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { LocationContext } from "./LocationProvider";
 import "./Location.css"
 
 
 
 export const LocationForm = () => {
-  const { addLocation } = useContext(LocationContext)
+  const { addLocation, getLocationById, updateLocation } = useContext(LocationContext)
   
+  const [isLoading, setIsLoading] = useState(true);
 
-  /*
-  With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
+  const [location, setLocation] = useState({})
 
-  Define the intial state of the form inputs with useState()
-  */
-
-  const [location, setLocation] = useState({
-    name: "",
-    address: ""
-  });
-
+  const { locationId } = useParams();
   const history = useHistory();
 
 
@@ -38,36 +31,66 @@ export const LocationForm = () => {
     setLocation(newLocation)
   }
 
-  const handleClickSaveLocation = (event) => {
-    event.preventDefault() //Prevents the browser from submitting the form
-
-      const newLocation = {
-        name: location.name,
-        address: location.address,
-      }
-      addLocation(newLocation)
+  const handleClickSaveLocation = () => {
+    if (location.address === "" || location.name === "") {
+        window.alert("Please complete the form")
+    } else {
+      //disable the button - no extra clicks
+      setIsLoading(true);
+      if (locationId) {
+        //PUT - update
+        updateLocation({
+            id: location.id,
+            name: location.name,
+            address: location.address
+        })
+        .then(() => history.push(`/locations/detail/${location.id}`))
+      } else {
+        //POST - add
+        addLocation({
+          name: location.name,
+          address: location.address,
+      })
         .then(() => history.push("/locations"))
-    
+      }
+    }
   }
 
-  return (
-    <form className="locationForm">
-      <h2 className="locationForm__title">New Location</h2>
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="name">Location name:</label>
-          <input type="text" id="name" required autoFocus className="form-control" placeholder="Location name" value={location.name} onChange={handleControlledInputChange} />
-        </div>
-      </fieldset>
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="address">Location address:</label>
-          <input type="text" id="address" required autoFocus className="form-control" placeholder="Location address" value={location.address} onChange={handleControlledInputChange} />
-        </div>
-      </fieldset>
-      <button className="btn btn-primary" onClick={handleClickSaveLocation}>
-        Save Location
-          </button>
-    </form>
-  )
+  useEffect(() => {
+    if (locationId) {
+        getLocationById(locationId)
+            .then(location => {
+                setLocation(location)
+                setIsLoading(false)
+            })
+    } else {
+        setIsLoading(false)
+    }
+}, [])
+
+return (
+        <form className="locationForm">
+            <h2 className="locationForm__title">New Location</h2>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="name">Location name: </label>
+                    <input type="text" id="name" required autoFocus className="form-control" placeholder="Location name" value={location.name} onChange={handleControlledInputChange} />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="address">Location address: </label>
+                    <input type="text" id="address" required autoFocus className="form-control" placeholder="Location address" value={location.address} onChange={handleControlledInputChange} />
+                </div>
+            </fieldset>
+            <button className="btn btn-primary" disabled={isLoading} onClick={
+                (event) => {
+                    event.preventDefault()
+                    handleClickSaveLocation()
+                }
+            }>
+                {locationId ? <>Save Location</> : <>Add Location</>}
+            </button>
+        </form>
+    )
 }
